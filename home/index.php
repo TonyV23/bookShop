@@ -17,7 +17,7 @@
             <div class="h-100 p-5 text-white bg-dark rounded-3">
                 <h2>Admin Login</h2>
                 <p></p>
-                <a href="#" class="btn btn-outline-light">Admin Login</a>
+                <a href="../admin/login.php" class="btn btn-outline-light">Admin Login</a>
             </div>    
         </div>
         
