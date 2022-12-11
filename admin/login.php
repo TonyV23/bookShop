@@ -1,3 +1,54 @@
+<?php 
+    require "../database/connection.php";
+    $message = "";
+
+    if (isset($_POST["login_button"])){
+        $form_data = array();
+
+        if (empty($_POST["admin_email"])){
+            $message .= "<li>Email address is required</li>";    
+        }else{
+            if (!filter_var($_POST["admin_email"],FILTER_VALIDATE_EMAIL)){
+                $message .= "<li>Email address is not valid</li>";    
+            }else{
+                $form_data["admin_email"] = $_POST["admin_email"]; 
+            }
+        }
+
+        if (empty($_POST["admin_password"])){
+            $message .= "<li>Password is required</li>";    
+        }else{
+            $form_data["admin_password"] = $_POST["admin_password"];
+        }
+
+        // searching for admin information authentication into database
+        if ($message == ""){
+            $data = array(
+                "admin_email"       => $form_data ["admin_email"]
+            );
+            $select_admin_email = "SELECT * FROM admin WHERE email = :admin_email";
+            $statement = $connect->prepare($select_admin_email);
+            $statement->execute($data);
+            
+            if($statement->rowCount() > 0){
+                foreach($statement->fetchAll() as $row){
+                    if ($row["password"] == $form_data["admin_password"]){
+                        $_SESSION["id"] = $row["id"];
+                        header("location:admin/index.php");
+                    }else{
+                        $message .= "<li>Wrong password</li>";
+                    }
+                }
+            }else{
+                $message .= "<li>Wrong email address</li>";
+            }
+        }
+
+    } 
+
+    include "../partials/header.php";
+?>
+
 <div class="d-flex align-items-center justify-content center" style="min-height:700px">
     <div class="col md-6">
     
