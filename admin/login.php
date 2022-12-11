@@ -34,7 +34,7 @@
                 foreach($statement->fetchAll() as $row){
                     if ($row["password"] == $form_data["admin_password"]){
                         $_SESSION["id"] = $row["id"];
-                        header("location:admin/index.php");
+                        header("location:index.php");
                     }else{
                         $message .= "<li>Wrong password</li>";
                     }
@@ -47,19 +47,23 @@
     } 
 
     include "../partials/header.php";
+    include "../database/connection.php";
 ?>
 
-<div class="d-flex align-items-center justify-content center" style="min-height:700px">
-    <div class="col md-6">
+<div class="d-flex align-items-center justify-content-center" style="min-height:500px;">
+    <div class="col-md-6">
     <?php
-        echo '<div class="alert alert-danger">
-                <ul>'.$message.'</ul>
-            </div>'
+        if ($message !=""){
+            echo '<div class="alert alert-danger">
+                    <ul>'.$message.'</ul>
+                </div>';
+
+        }
     ?>    
         <div class="card">
             <div class="card-header">Admin Login</div>
             <div class="card-body">
-                <form action="" method="post">
+                <form method="post">
                     <div class="mb-3">
                         <label class="form-label">Email address</label>
                         <input type="email" class="form-control" name="admin_email" id="admin_email">
