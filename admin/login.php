@@ -51,7 +51,11 @@
 
 <div class="d-flex align-items-center justify-content center" style="min-height:700px">
     <div class="col md-6">
-    
+    <?php
+        echo '<div class="alert alert-danger">
+                <ul>'.$message.'</ul>
+            </div>'
+    ?>    
         <div class="card">
             <div class="card-header">Admin Login</div>
             <div class="card-body">
